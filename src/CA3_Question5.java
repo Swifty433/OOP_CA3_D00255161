@@ -14,6 +14,7 @@ public class CA3_Question5
     //123
 
 
+    //take off method (adds taking off to the que)
     public void takeoff(String flightSymbol)
     {
         takeOffQueue.add(flightSymbol);
