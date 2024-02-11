@@ -1,6 +1,7 @@
 import java.util.Scanner;
+import java.util.*;
 /**
- *  Name:
+ *  Name: Joseph Byrne
  *  Class Group:
  */
 public class CA3_Question8 {
@@ -9,9 +10,19 @@ public class CA3_Question8 {
         Reads in an equation from the user
      */
     public static void main(String[] args) {
-        String equation;
         Scanner in = new Scanner(System.in);
         System.out.println("Please enter equation");
-        equation = in.nextLine().trim();
+        System.out.println("Valid inputs include: 'Numerical digits', '+', '-', '*', '/', '(', ')'");
+        String equation = in.nextLine().trim();
+
+        Stack<Double> numbers = new Stack<>();
+        Stack<Character> signs = new Stack<>();
+
+        String num = "";
+
+        for(int i = 0; i < equation.length(); i++)
+        {
+            char next = equation.charAt(i);
+        }
     }
 }
