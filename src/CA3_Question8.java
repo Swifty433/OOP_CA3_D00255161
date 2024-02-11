@@ -23,6 +23,32 @@ public class CA3_Question8 {
         for(int i = 0; i < equation.length(); i++)
         {
             char next = equation.charAt(i);
+
+
         }
     }
+
+    public static double Operators(char op, double a, double b)
+    {
+        if(op == '+')
+        {
+            return a + b;
+        }
+        else if(op == '-')
+        {
+            return a - b;
+        }
+        else if (op == '*')
+        {
+            return a * b;
+        }
+        else
+        {
+            return a / b;
+        }
+    }
+
+
+
+
 }
