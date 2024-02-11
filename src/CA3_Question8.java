@@ -1,54 +1,93 @@
-import java.util.Scanner;
 import java.util.*;
+import java.util.Scanner;
 /**
  *  Name: Joseph Byrne
  *  Class Group:
  */
 public class CA3_Question8 {
-
     /*
         Reads in an equation from the user
      */
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Please enter equation");
-        System.out.println("Valid inputs include: 'Numerical digits', '+', '-', '*', '/', '(', ')'");
-        String equation = in.nextLine().trim();
-
-        Stack<Double> numbers = new Stack<>();
-        Stack<Character> signs = new Stack<>();
-
-        String num = "";
-
-        for(int i = 0; i < equation.length(); i++)
-        {
-            char next = equation.charAt(i);
-
-
-        }
-    }
-
-    public static double Operators(char op, double a, double b)
+    public static void main(String[] args)
     {
-        if(op == '+')
+        boolean exit = false;
+        Scanner in = new Scanner(System.in);
+        while (!exit)
         {
-            return a + b;
+            System.out.println("\nPlease enter an equation or type 'exit' to quit. ");
+            System.out.println("Use the operators '+', '-', '*', '/', '(', ')', and numerical digits.");
+            String equation = in.nextLine().trim();
+
+            if (equation.equalsIgnoreCase("exit"))
+            {
+                exit = true;
+                continue;
+            }
+
+            Stack<Double> numbers = new Stack<>();
+            Stack<Character> operators = new Stack<>();
+
+            String num = "";
+
+            for (int i = 0; i < equation.length(); i++)
+            {
+                char next = equation.charAt(i);
+
+                if (Character.isDigit(next))
+                {
+                    num += next;
+                    if (i == equation.length() - 1 || !Character.isDigit(equation.charAt(i + 1)))
+                    {
+                        numbers.push(Double.parseDouble(num));
+                        num = "";
+                    }
+                }
+                else if (next == '(')
+                {
+                    operators.push(next);
+                }
+                else if (next == ')')
+                {
+                    while (operators.peek() != '(' && numbers.size() > 1)
+                    {
+                        numbers.push(evaluate(numbers.pop(), numbers.pop(), operators.pop()));
+                    }
+                    operators.pop(); // Discard '('
+                }
+                else
+                {
+                    while (!operators.isEmpty() && operators.peek() != '(' && precedence(operators.peek()) >= precedence(next) && numbers.size() > 1)
+                    {
+                        numbers.push(evaluate(numbers.pop(), numbers.pop(), operators.pop()));
+                    }
+                    operators.push(next);
+                }
+
+                if (i == equation.length() - 1)
+                {
+                    while (!operators.isEmpty() && numbers.size() > 1)
+                    {
+                        numbers.push(evaluate(numbers.pop(), numbers.pop(), operators.pop()));
+                    }
+                }
+            }
+            System.out.printf("\nAnswer = %.2f", numbers.peek());
         }
-        else if(op == '-')
-        {
-            return a - b;
-        }
-        else if (op == '*')
-        {
-            return a * b;
-        }
-        else
-        {
-            return a / b;
-        }
+        System.out.println("BYE BYE");
     }
 
+    public static double evaluate(double b, double a, char op)
+    {
+        return switch (op) {
+            case '+' -> a + b;
+            case '-' -> a - b;
+            case '/' -> a / b;
+            default -> a * b;
+        };
+    }
 
-
-
+    public static int precedence(char op)
+    {
+        return (op == '+' || op == '-') ? 1 : 2;
+    }
 }

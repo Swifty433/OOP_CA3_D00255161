@@ -60,7 +60,8 @@ public class CA3_Question6 {
                     }
                 }
             }
-        }while (!command.equalsIgnoreCase("quit")) ;
+        }
+        while (!command.equalsIgnoreCase("quit")) ;
         System.out.println("€"+profit);
     }
 }
