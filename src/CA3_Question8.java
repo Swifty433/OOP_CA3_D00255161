@@ -45,6 +45,7 @@ public class CA3_Question8 {
                 else if (next == '(')
                 {
                     operators.push(next);
+
                 }
                 else if (next == ')')
                 {

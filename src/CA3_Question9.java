@@ -1,6 +1,6 @@
 /**
- *  Name:
- *  Class Group:
+ *  Name: Joseph Byrne
+ *  Class Group: GD2A
  */
 
 /*
