@@ -1,57 +1,61 @@
 import java.util.*;
 import java.io.*;
-public class CA3_Question10 {
+public class CA3_Question10
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException
+    {
         Map<String, Set<DistanceTo>> network = new HashMap<>();
 
-        String startCity = null;
-        try
-        {
-            File file = new File("irish_places.txt");
+            File file = new File("src/irish_places.txt");
             Scanner scanner = new Scanner(file);
-            startCity = scanner.next();
+            String startCity = scanner.next();
 
-            while (scanner.hasNext())
+        while (scanner.hasNext())
+        {
+            String city1 = scanner.next();
+            String city2 = scanner.next();
+            int distance;
+
+            if (scanner.hasNextInt())
             {
-                String city1 = scanner.next();
-                String city2 = scanner.next();
-                int distance = scanner.nextInt();
-
-                network.putIfAbsent(city1, new HashSet<>());
-                network.putIfAbsent(city2, new HashSet<>());
-
-                network.get(city1).add(new DistanceTo(city2, distance));
-                network.get(city2).add(new DistanceTo(city1, distance)); // If the graph is undirected
+                distance = scanner.nextInt();
+            }
+            else
+            {
+                System.out.println("Expected an integer distance, but found: " + scanner.next());
+                // Skip to the end of the line and continue to the next line
+                scanner.nextLine();
+                continue;
             }
 
-            scanner.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
+            network.putIfAbsent(city1, new HashSet<>());
+            network.putIfAbsent(city2, new HashSet<>());
 
-        if (startCity == null || !network.containsKey(startCity)) {
-            System.err.println("Starting city not found in the network.");
-            return;
+            network.get(city1).add(new DistanceTo(city2, distance));
+            network.get(city2).add(new DistanceTo(city1, distance));  // If the graph is undirected
         }
+        scanner.close();
 
         Map<String, Integer> shortestKnownDistance = new HashMap<>();
         PriorityQueue<DistanceTo> pq = new PriorityQueue<>();
 
         pq.add(new DistanceTo(startCity, 0));
 
-        while (!pq.isEmpty()) {
+        while (!pq.isEmpty())
+        {
             DistanceTo current = pq.poll();
             String currentCity = current.getTarget();
             int currentDistance = current.getDistance();
 
-            if (!shortestKnownDistance.containsKey(currentCity)) {
+            if (!shortestKnownDistance.containsKey(currentCity))
+            {
                 shortestKnownDistance.put(currentCity, currentDistance);
                 Set<DistanceTo> neighbors = network.get(currentCity);
-                if (neighbors != null) {
-                    for (DistanceTo neighbor : neighbors) {
+                if (neighbors != null)
+                {
+                    for (DistanceTo neighbor : neighbors)
+                    {
                         int newDistance = currentDistance + neighbor.getDistance();
                         pq.add(new DistanceTo(neighbor.getTarget(), newDistance));
                     }
@@ -60,7 +64,8 @@ public class CA3_Question10 {
         }
 
         // Print shortest distances
-        for (Map.Entry<String, Integer> entry : shortestKnownDistance.entrySet()) {
+        for (Map.Entry<String, Integer> entry : shortestKnownDistance.entrySet())
+        {
             System.out.println("Shortest distance from " + startCity + " to " + entry.getKey() + ": " + entry.getValue());
         }
     }
