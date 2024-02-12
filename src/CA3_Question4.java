@@ -13,28 +13,38 @@ public class CA3_Question4 {
      */
     public static boolean validate(String filename) throws FileNotFoundException
     {
+        // Create a File object with the given filename.
         File file = new File(filename);
+        // Create a Scanner object to read from the file
         Scanner scanner = new Scanner(file);
 
+        // Stack to keep track of opening tags.
         Stack<String> tagStack = new Stack<>();
 
+        // Loop through each token in the file.
         while (scanner.hasNext())
         {
+            // Get the next token.
             String tag = scanner.next();
 
+            // Check if it's a closing tag.
             if(tag.startsWith("</"))
             {
                 if (tagStack.isEmpty() || !tagStack.pop().equals(tag.substring(2)))
                 {
+                    // If the stack is empty or the closing tag doesn't match the last opening tag, return false.
                     return false;
                 }
             }
+            // Check if it's an opening tag
             else if (tag.startsWith("<"))
             {
+                // Push the tag onto the stack.
                 tagStack.push(tag.substring(1));
             }
         }
 
+        // If the stack is empty, all opening tags have been closed.
         return tagStack.isEmpty();
 
     }

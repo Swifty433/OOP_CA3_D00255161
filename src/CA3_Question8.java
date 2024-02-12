@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.Scanner;
 /**
  *  Name: Joseph Byrne
- *  Class Group:
+ *  Class Group: GD2A
  */
 public class CA3_Question8 {
     /*
@@ -77,6 +77,7 @@ public class CA3_Question8 {
         System.out.println("BYE BYE");
     }
 
+    // Evaluates the result of the given operation.
     public static double evaluate(double b, double a, char op)
     {
         return switch (op) {
@@ -87,6 +88,7 @@ public class CA3_Question8 {
         };
     }
 
+    //Returns the precedence of the operator.
     public static int precedence(char op)
     {
         return (op == '+' || op == '-') ? 1 : 2;

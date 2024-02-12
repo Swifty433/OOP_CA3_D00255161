@@ -21,12 +21,14 @@ public class CA3_Question5
         System.out.println(("Flight " + flightSymbol + " is queued for takeoff"));
     }
 
+    // Method to add a flight to the landing queue
     public void land(String flightSymbol)
     {
         landingQueue.add(flightSymbol);
         System.out.println("Flight " + flightSymbol + " is queued for landing");
     }
 
+    // Method to process the next flight operation (landing or takeoff)
     public void next()
     {
         if (!landingQueue.isEmpty())
@@ -44,6 +46,7 @@ public class CA3_Question5
         }
     }
 
+    // Main method to interactively manage flight operations
     public static void main(String[] args) {
         CA3_Question5 airport = new CA3_Question5();
         Scanner scanner = new Scanner(System.in);

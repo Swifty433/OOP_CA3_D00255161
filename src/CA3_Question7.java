@@ -25,6 +25,7 @@ public class CA3_Question7 {
      */
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        //changed to a hashmap instead of queue
         Map<String, Queue<Block>> stocks = new HashMap<>();
         double profit = 0;
 
@@ -36,6 +37,7 @@ public class CA3_Question7 {
                 String companyAc = in.next();
                 int qty = in.nextInt();
                 double price = in.nextDouble();
+                //adding of the company accounts(specific stocks)
                 if(!stocks.containsKey(companyAc))
                 {
                     stocks.put(companyAc, new LinkedList<>());
