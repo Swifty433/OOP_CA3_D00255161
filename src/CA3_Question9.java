@@ -37,13 +37,12 @@ public class CA3_Question9 {
             y = current[1];
             // Marking the current position the user is in
             if (maze[x][y] == 2) {
-                System.out.println("YIPPPEEE!! WE MADE IT!! WE CAN FINALLY EAT AFTER 2 WEEKS!!");
                 return;
             }
 
             if (x == maze.length - 1 && y == maze.length - 1) {
                 display(maze); // Display the maze after marking the visited positions
-                System.out.println("Path found!");
+                System.out.println("YIPPPEEE!! WE MADE IT!! WE CAN FINALLY EAT AFTER 2 WEEKS!!");
                 return;
             }
 
