@@ -1,17 +1,13 @@
 import java.util.*;
 import java.io.*;
-
-/**
- *  Name: Joseph Byrne
- *  Class Group: GD2A
- */
 public class CA3_Question10 {
 
     public static void main(String[] args) {
         Map<String, Set<DistanceTo>> network = new HashMap<>();
 
         String startCity = null;
-        try {
+        try
+        {
             File file = new File("irish_places.txt");
             Scanner scanner = new Scanner(file);
             startCity = scanner.next();
@@ -30,9 +26,15 @@ public class CA3_Question10 {
             }
 
             scanner.close();
-        } catch (FileNotFoundException e)
+        }
+        catch (FileNotFoundException e)
         {
             e.printStackTrace();
+        }
+
+        if (startCity == null || !network.containsKey(startCity)) {
+            System.err.println("Starting city not found in the network.");
+            return;
         }
 
         Map<String, Integer> shortestKnownDistance = new HashMap<>();
@@ -40,26 +42,25 @@ public class CA3_Question10 {
 
         pq.add(new DistanceTo(startCity, 0));
 
-        while (!pq.isEmpty())
-        {
+        while (!pq.isEmpty()) {
             DistanceTo current = pq.poll();
             String currentCity = current.getTarget();
             int currentDistance = current.getDistance();
 
-            if (!shortestKnownDistance.containsKey(currentCity))
-            {
+            if (!shortestKnownDistance.containsKey(currentCity)) {
                 shortestKnownDistance.put(currentCity, currentDistance);
-                for (DistanceTo neighbor : network.get(currentCity))
-                {
-                    int newDistance = currentDistance + neighbor.getDistance();
-                    pq.add(new DistanceTo(neighbor.getTarget(), newDistance));
+                Set<DistanceTo> neighbors = network.get(currentCity);
+                if (neighbors != null) {
+                    for (DistanceTo neighbor : neighbors) {
+                        int newDistance = currentDistance + neighbor.getDistance();
+                        pq.add(new DistanceTo(neighbor.getTarget(), newDistance));
+                    }
                 }
             }
         }
 
         // Print shortest distances
-        for (Map.Entry<String, Integer> entry : shortestKnownDistance.entrySet())
-        {
+        for (Map.Entry<String, Integer> entry : shortestKnownDistance.entrySet()) {
             System.out.println("Shortest distance from " + startCity + " to " + entry.getKey() + ": " + entry.getValue());
         }
     }
